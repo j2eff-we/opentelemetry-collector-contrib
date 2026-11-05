@@ -58,6 +58,27 @@ If `fallback_scrape_protocol` is not set, the receiver defaults it to `Prometheu
 
 For native histogram details and protocol requirements, see [Prometheus native histograms](#prometheus-native-histograms).
 
+## Removing unused service discovery mechanisms
+
+The receiver registers every service discovery mechanism that Prometheus ships, so a
+default build links each one's SDK. For example, Outscale SD brings in `github.com/aws/aws-sdk-go` (v1).
+
+Prometheus guards each mechanism with a build tag. If you build your own distribution with
+the [OpenTelemetry Collector Builder](https://github.com/open-telemetry/opentelemetry-collector/tree/main/cmd/builder),
+set `dist.build_tags` to drop all of them and add back the ones you use:
+
+```yaml
+dist:
+  build_tags: "remove_all_sd,enable_kubernetes_sd"
+```
+
+Prometheus lists the available tags under
+[Service discovery plugins](https://github.com/prometheus/prometheus#service-discovery-plugins).
+Run `go version -m <binary>` to check which modules ended up in your build.
+
+If your configuration uses a mechanism that the build excludes, the Collector fails at startup with an
+error such as `field ec2_sd_configs not found in type config.ScrapeConfig`.
+
 ## Getting Started
 
 This receiver is a drop-in replacement for getting Prometheus to scrape your
