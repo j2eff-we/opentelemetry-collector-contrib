@@ -7,7 +7,6 @@ import (
 	"context"
 
 	promconfig "github.com/prometheus/prometheus/config"
-	_ "github.com/prometheus/prometheus/plugins" // init() of this package registers service discovery impl.
 	"go.opentelemetry.io/collector/component"
 	"go.opentelemetry.io/collector/config/confighttp"
 	"go.opentelemetry.io/collector/config/configoptional"
@@ -17,6 +16,7 @@ import (
 
 	"github.com/open-telemetry/opentelemetry-collector-contrib/receiver/prometheusreceiver/internal/apiserver"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/receiver/prometheusreceiver/internal/metadata"
+	_ "github.com/open-telemetry/opentelemetry-collector-contrib/receiver/prometheusreceiver/internal/plugins" // init() of this package registers service discovery impl.
 	"github.com/open-telemetry/opentelemetry-collector-contrib/receiver/prometheusreceiver/internal/targetallocator"
 )
 

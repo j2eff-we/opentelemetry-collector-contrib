@@ -40,6 +40,7 @@ an error for if the receiver's configuration YAML/code contains any of the follo
 - [x] remote_read
 - [x] remote_write
 - [x] rule_files
+- [x] outscale_sd_configs
 
 ## External Dependencies
 
